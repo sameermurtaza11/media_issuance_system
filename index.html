@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CD/DVD Issuance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .input-error {
+            border-color: #e53e3e;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .success-message {
+            color: #38a169;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-blue-600 py-4 px-6">
+                <h1 class="text-2xl font-bold text-white">
+                    <i class="fas fa-compact-disc mr-2"></i> CD/DVD Issuance System
+                </h1>
+            </div>
+
+            <div class="p-6">
+                <form id="issuanceForm" class="space-y-6">
+                    <!-- Type Selection -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Media Type -->
+                        <div>
+                            <label for="mediaType" class="block text-sm font-medium text-gray-700 mb-1">
+                                Media Type <span class="text-red-500">*</span>
+                            </label>
+                            <select id="mediaType" name="mediaType"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                                <option value="" selected disabled>Select Media Type</option>
+                                <option value="CD">CD</option>
+                                <option value="DVD">DVD</option>
+                            </select>
+                            <p id="mediaTypeError" class="error-message hidden">Please select a media type</p>
+                        </div>
+
+                        <!-- CD/DVD ID -->
+                        <div>
+                            <label for="mediaId" class="block text-sm font-medium text-gray-700 mb-1">
+                                Media ID <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="mediaId" name="mediaId"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                            <p id="mediaIdError" class="error-message hidden">Please enter a valid ID</p>
+                        </div>
+                    </div>
+
+                    <!-- Recipient Information -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="recipientName" class="block text-sm font-medium text-gray-700 mb-1">
+                                Recipient Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="recipientName" name="recipientName"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                            <p id="recipientNameError" class="error-message hidden">Please enter recipient name</p>
+                        </div>
+
+                        <div>
+                            <label for="recipientPin" class="block text-sm font-medium text-gray-700 mb-1">
+                                Recipient PIN <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="recipientPin" name="recipientPin"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                            <p id="recipientPinError" class="error-message hidden">Please enter a valid PIN</p>
+                        </div>
+                    </div>
+
+                    <!-- Issuance Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="issueDate" class="block text-sm font-medium text-gray-700 mb-1">
+                                Date of Issuance <span class="text-red-500">*</span>
+                            </label>
+                            <input type="date" id="issueDate" name="issueDate"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                            <p id="issueDateError" class="error-message hidden">Please select an issue date</p>
+                        </div>
+
+                        <div>
+                            <label for="issuedByName" class="block text-sm font-medium text-gray-700 mb-1">
+                                Issued By (Name) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="issuedByName" name="issuedByName"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                            <p id="issuedByNameError" class="error-message hidden">Please enter issuer name</p>
+                        </div>
+
+                        <div>
+                            <label for="issuedByPin" class="block text-sm font-medium text-gray-700 mb-1">
+                                Issued By (PIN) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="issuedByPin" name="issuedByPin"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                            <p id="issuedByPinError" class="error-message hidden">Please enter issuer PIN</p>
+                        </div>
+                    </div>
+
+                    <!-- Media Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="mediaCategory" class="block text-sm font-medium text-gray-700 mb-1">
+                                Media Category <span class="text-red-500">*</span>
+                            </label>
+                            <select id="mediaCategory" name="mediaCategory"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                                <option value="" selected disabled>Select Category</option>
+                                <option value="A">A</option>
+                                <option value="T">T</option>
+                                <option value="O">O</option>
+                            </select>
+                            <p id="mediaCategoryError" class="error-message hidden">Please select a category</p>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label for="remarks" class="block text-sm font-medium text-gray-700 mb-1">
+                                Remarks
+                            </label>
+                            <textarea id="remarks" name="remarks" rows="2"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="successMessage" class="success-message hidden"></div>
+
+
+                    <div class="flex justify-end space-x-3">
+                        <!--  <button href="export_ui.html" target="_blank" class="text-blue-600 hover:underline">
+                            Export Data to Excel</button> --> <!--I Changed a tag to button tag-->
+
+                        <button type="button" onclick="openExportModal()"
+                            class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Export Data
+                        </button>
+
+
+                        <!-- Export Modal -->
+                        <div id="exportModal"
+                            class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+                            <div class="bg-white p-6 rounded shadow-md w-full max-w-md relative">
+                                <button onclick="closeExportModal()"
+                                    class="absolute top-2 right-2 text-gray-500 hover:text-black text-lg">×</button>
+                                <h2 class="text-xl font-bold mb-4 text-center">Admin Validation</h2>
+                                <div class="space-y-3">
+                                    <input type="text" id="exportUsername" placeholder="Admin Username"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
+                                    <input type="password" id="exportPassword" placeholder="Admin Password"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
+                                    <label class="block">From Date</label>
+                                    <input type="date" id="exportFromDate"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
+                                    <label class="block">To Date</label>
+                                    <input type="date" id="exportToDate"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
+                                    <button onclick="submitExportForm()"
+                                        class="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700">Export
+                                        to Excel</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button type="button" id="resetBtn"
+                            class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Reset Form
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Submit Data
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('issuanceForm');
+            const resetBtn = document.getElementById('resetBtn');
+            const successMessage = document.getElementById('successMessage');
+
+            // Form validation
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Clear previous errors
+                document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+                document.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
+
+                // Validate fields
+                const requiredFields = [
+                    'mediaType', 'mediaId', 'recipientName', 'recipientPin',
+                    'issueDate', 'issuedByName', 'issuedByPin', 'mediaCategory'
+                ];
+
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (!field.value) {
+                        field.classList.add('input-error');
+                        document.getElementById(`${fieldId}Error`).classList.remove('hidden');
+                        isValid = false;
+                    }
+                });
+
+                // Validate PIN format (3-10 digits)
+                const pinFields = ['recipientPin', 'issuedByPin'];
+                const pinRegex = /^\d{3,10}$/;
+
+                pinFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field.value && !pinRegex.test(field.value)) {
+                        field.classList.add('input-error');
+                        document.getElementById(`${fieldId}Error`).textContent = 'PIN must be 3-10 digits';
+                        document.getElementById(`${fieldId}Error`).classList.remove('hidden');
+                        isValid = false;
+                    }
+                });
+
+                if (isValid) {
+                    submitForm();
+                    function submitForm(existingId = null, isTransfer = false) {
+                        const formData = new FormData(form);
+                        const data = {};
+                        formData.forEach((value, key) => data[key] = value);
+
+                        const formattedData = { ...data };
+
+                        // Check if transfer
+                        const endpoint = isTransfer ? 'http://localhost:5000/api/transfer' : 'http://localhost:5000/api/issuance';
+
+                        if (isTransfer) {
+                            formattedData.existing_id = existingId;
+                        }
+
+                        fetch(endpoint, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(formattedData)
+                        })
+                            .then(res => res.json())
+                            .then(result => {
+                                if (result.success) {
+                                    successMessage.textContent = isTransfer ? 'Media transferred successfully!' : 'Data submitted!';
+                                    successMessage.classList.remove('hidden');
+                                    form.reset();
+                                } else if (result.exists) {
+                                    const confirmTransfer = confirm(result.message);
+                                    if (confirmTransfer) {
+                                        submitForm(result.existing_id, true);
+                                    } else {
+                                        form.reset();
+                                    }
+                                } else {
+                                    alert('Error: ' + result.message);
+                                }
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                alert('Failed to submit data: ' + err.message);
+                            });
+
+                        setTimeout(() => {
+                            successMessage.classList.add('hidden');
+                        }, 10000);
+                    }
+
+                }
+            });
+
+            // Reset button
+            resetBtn.addEventListener('click', function () {
+                form.reset();
+                document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+                document.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
+                successMessage.classList.add('hidden');
+            });
+
+            // Form submission handler
+            function submitForm() {
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+
+                // In a real application, you would send this data to your PHP backend
+                fetch('http://localhost:5000/api/issuance', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then(response => response.json())         // ✅ sirf aik martaba
+                    .then(data => {
+                        if (data.success) {
+                            successMessage.textContent = 'Data successfully submitted!';
+                            successMessage.classList.remove('hidden');
+                            form.reset();
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to submit data: ' + error.message);
+                    });
+
+
+                // For demonstration purposes, we'll just show the data in the console
+                console.log('Form data to be submitted:', data);
+                successMessage.textContent = 'Form validated successfully!'; successMessage.classList.remove('hidden');
+
+                // Remove success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                }, 10000);
+            }
+        });
+
+
+        // Modal handling
+        function openExportModal() {
+            document.getElementById("exportModal").classList.remove("hidden");
+            document.getElementById("exportModal").classList.add("flex");
+        }
+        function closeExportModal() {
+            document.getElementById("exportModal").classList.add("hidden");
+            document.getElementById("exportModal").classList.remove("flex");
+        }
+
+        function submitExportForm() {
+            const username = document.getElementById("exportUsername").value;
+            const password = document.getElementById("exportPassword").value;
+            const fromDate = document.getElementById("exportFromDate").value;
+            const toDate = document.getElementById("exportToDate").value;
+
+            fetch("http://127.0.0.1:5000/export", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password, fromDate, toDate })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'media_data.xlsx';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    closeExportModal();
+                })
+                .catch(error => {
+                    alert("Export failed: " + error.message);
+                });
+        }
+    </script>
+</body>
+
+</html>

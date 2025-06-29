@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Export Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <button onclick="openModal()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 shadow-md">Export to
+        Excel</button>
+
+    <!-- Modal -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Admin Login & Date Range</h2>
+
+            <label class="block mb-2 text-sm font-medium text-gray-700">Username:</label>
+            <input type="text" id="username" class="w-full mb-4 px-3 py-2 border rounded" placeholder="Enter username">
+
+            <label class="block mb-2 text-sm font-medium text-gray-700">Password:</label>
+            <input type="password" id="password" class="w-full mb-4 px-3 py-2 border rounded"
+                placeholder="Enter password">
+
+            <label class="block mb-2 text-sm font-medium text-gray-700">From Date:</label>
+            <input type="date" id="fromDate" class="w-full mb-4 px-3 py-2 border rounded">
+
+            <label class="block mb-2 text-sm font-medium text-gray-700">To Date:</label>
+            <input type="date" id="toDate" class="w-full mb-4 px-3 py-2 border rounded">
+
+            <div class="flex justify-end space-x-3">
+                <button onclick="closeModal()"
+                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
+                <button onclick="exportData()"
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Export</button>
+            </div>
+
+            <!-- Close button (top-right) -->
+            <button onclick="closeModal()"
+                class="absolute top-2 right-3 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("modalOverlay").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("modalOverlay").classList.add("hidden");
+        }
+
+        function exportData() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const fromDate = document.getElementById("fromDate").value;
+            const toDate = document.getElementById("toDate").value;
+
+            fetch("http://127.0.0.1:5000/export", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password, fromDate, toDate })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'media_data.xlsx';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    closeModal(); // ✅ Close modal on success
+                })
+                .catch(error => {
+                    alert("Export failed: " + error.message);
+                });
+        }
+    </script>
+</body>
+
+</html>
