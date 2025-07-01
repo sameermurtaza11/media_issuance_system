@@ -127,14 +127,13 @@ def handle_transfer():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
 
 # Export to Excel Route
-@app.route('/export', methods=['POST'])
+@app.route('/export', methods=['POST', 'OPTIONS'])
 def export_data():
+    if request.method == "OPTIONS":
+        return '', 200  # preflight request allowed
+
     try:
         data = request.get_json()
         if data.get('username') != ADMIN_USERNAME or data.get('password') != ADMIN_PASSWORD:

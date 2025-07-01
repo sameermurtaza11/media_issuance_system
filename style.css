@@ -147,7 +147,7 @@ select:focus {
 }
 
 input[type="text"] {
-    width: 100%;
+    width: 95%;
     /* Tailwind: w-full */
     padding: 0.5rem 0.75rem;
     /* Tailwind: px-3 py-2 */
@@ -216,6 +216,14 @@ input[type="text"]:focus {
     /* focus:ring-blue-500 */
 }
 
+.hidden {
+    display: none !important;
+}
+
+.flex {
+    display: flex !important;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -248,16 +256,13 @@ input[type="text"]:focus {
 
 .modal-close-button {
     position: absolute;
-    /* absolute */
     top: 0.5rem;
-    /* top-2 */
     right: 0.5rem;
-    /* right-2 */
+    height: 1.4rem;
+    width: 1.4rem;
+    border-radius: 0.7rem;
     color: #6B7280;
-    /* text-gray-500 */
     font-size: 1.125rem;
-    /* text-lg */
-
     transition: color 0.2s ease-in-out;
 }
 
@@ -285,7 +290,7 @@ input[type="text"]:focus {
 }
 
 .export-input {
-    width: 100%;
+    width: 95%;
     /* w-full */
     padding: 0.5rem 0.75rem;
     /* px-3 py-2 */
