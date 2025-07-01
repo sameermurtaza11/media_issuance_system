@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CD/DVD Issuance System</title>
-    <link href="./src/output.css" rel="stylesheet">
+    <!-- <link href="./src/output.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="style.css">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <!-- <link rel="stylesheet" href="C:\Users\SUN RISE\Desktop\New folder\Sameer\WebApp\tailwindcss-main"> -->
@@ -34,7 +34,7 @@
         <div class="custom-card">
             <div class="custom-header">
                 <h1 class="custom-title">
-                    <i class="custom-icon"></i> CD/DVD Issuance System
+                    <img class="custom-icon" src="images\cd-icon-compact-disk.png"> CD/DVD Issuance System
                 </h1>
             </div>
 
@@ -85,25 +85,25 @@
                     </div>
 
                     <!-- Issuance Details -->
-                    <div class="grid">
-                        <div>
-                            <label for="issueDate" class="block">
+                    <div class="grid" style="display: flex;">
+                        <div class="block-issue-date" style="width: 16rem;">
+                            <label for="issueDate">
                                 Date of Issuance <span>*</span>
                             </label>
                             <input type="date" id="issueDate" name="issueDate" required>
                             <p id="issueDateError" class="error-message">Please select an issue date</p>
                         </div>
 
-                        <div>
-                            <label for="issuedByName" class="block">
+                        <div class="block-issue-name" style="width: 18rem;">
+                            <label for="issuedByName">
                                 Issued By (Name) <span>*</span>
                             </label>
                             <input type="text" id="issuedByName" name="issuedByName" required>
                             <p id="issuedByNameError" class="error-message">Please enter issuer name</p>
                         </div>
 
-                        <div>
-                            <label for="issuedByPin" class="block">
+                        <div class="block-issue-pin" style="width: 18rem;">
+                            <label for="issuedByPin">
                                 Issued By (PIN) <span>*</span>
                             </label>
                             <input type="text" id="issuedByPin" name="issuedByPin" required>
@@ -136,45 +136,55 @@
 
                     <div id="successMessage" class="success-message"></div>
 
+                    <!-- Admin Validation Modal (Always triggers on page load) -->
+                    <!-- Admin Validation Modal (Always triggers on page load) -->
+                    <div id="adminLoginModal" class="modal-overlay">
+                        <div class="modal-box">
+                            <h2 class="modal-title">Admin Login Required</h2>
+                            <div class="export-form-group">
+                                <input type="text" id="adminUsername" placeholder="Admin Username"
+                                    class="export-input" />
+                                <input type="password" id="adminPassword" placeholder="Admin Password"
+                                    class="export-input" />
 
-                    <div class="button-action">
-                        <button type="button" onclick="openExportModal()" class="btn-export">
-                            Export Data
-                        </button>
+                                <label class="export-label">Select Portal</label>
+                                <label><input type="radio" name="portal" value="index.html" checked> CD/DVD
+                                    Record</label>
+                                <label><input type="radio" name="portal" value="library_record.html"> Library
+                                    Records</label>
+                                <label><input type="radio" name="portal" value="other.html"> Other</label>
 
-
-                        <!-- Export Modal -->
-                        <div id="exportModal" class="modal-overlay hidden">
-
-                            <div class="modal-box">
-
-                                <button onclick="closeExportModal()" class="modal-close-button">×</button>
-
-                                <h2 class="modal-title">Admin Validation</h2>
-
-                                <div class="export-form-group">
-                                    <input type="text" id="exportUsername" placeholder="Admin Username" class="export-input">
-                                    <input type="password" id="exportPassword" placeholder="Admin Password" class="export-input">
-                                
-                                    <label class="export-label">From Date</label>
-                                    <input type="date" id="exportFromDate" class="export-input">
-                                
-                                    <label class="export-label">To Date</label>
-                                    <input type="date" id="exportToDate" class="export-input">
-                                
-                                    <button onclick="submitExportForm()" class="export-button">Export to Excel</button>
-                                </div>
-                                
+                                <button onclick="validateAdmin()" class="export-button">Login</button>
                             </div>
                         </div>
+                    </div>
 
 
-                        <button type="button" id="resetBtn" class="reset-button">Reset Form</button>
-
+                    <!-- Logout Button -->
+                    <div style="text-align: right; padding: 1rem;">
+                        <button onclick="logoutAdmin()" class="reset-button">Logout</button>
+                    </div>
+                    <div class="button-action">
+                        <button type="button" onclick="openExportModal()" class="btn-export">Export Data</button>
+                        <button type="reset" id="resetBtn" class="reset-button">Reset Form</button>
                         <button type="submit" class="submit-button">Submit Data</button>
-
                     </div>
                 </form>
+
+                <!-- Export Modal (Only date range now) -->
+                <div id="exportModal" class="modal-overlay hidden">
+                    <div class="modal-box">
+                        <button onclick="closeExportModal()" class="modal-close-button">×</button>
+                        <h2 class="modal-title">Export by Date Range</h2>
+                        <div class="export-form-group">
+                            <label class="export-label">From Date</label>
+                            <input type="date" id="exportFromDate" class="export-input" />
+                            <label class="export-label">To Date</label>
+                            <input type="date" id="exportToDate" class="export-input" />
+                            <button onclick="submitExportForm()" class="export-button">Export to Excel</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -327,48 +337,135 @@
 
 
         // Modal handling
+        // window.onload = function () {
+        //         openExportModal();
+        //     };
+
+
+        // function openExportModal() {
+        //     document.getElementById("exportModal").classList.remove("hidden");
+        //     document.getElementById("exportModal").classList.add("flex");
+        // }
+        // function closeExportModal() {
+        //     document.getElementById("exportModal").classList.add("hidden");
+        //     document.getElementById("exportModal").classList.remove("flex");
+        // }
+
+        // function submitExportForm() {
+        //     const username = document.getElementById("exportUsername").value;
+        //     const password = document.getElementById("exportPassword").value;
+        //     const fromDate = document.getElementById("exportFromDate").value;
+        //     const toDate = document.getElementById("exportToDate").value;
+
+        //     fetch("http://127.0.0.1:5000/export", {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({ username, password, fromDate, toDate })
+        //     })
+        //         .then(response => {
+        //             if (response.ok) {
+        //                 return response.blob();
+        //             } else {
+        //                 return response.text().then(text => { throw new Error(text); });
+        //             }
+        //         })
+        //         .then(blob => {
+        //             const url = window.URL.createObjectURL(blob);
+        //             const a = document.createElement('a');
+        //             a.href = url;
+        //             a.download = 'media_data.xlsx';
+        //             a.click();
+        //             window.URL.revokeObjectURL(url);
+        //             closeExportModal();
+        //         })
+        //         .catch(error => {
+        //             alert("Export failed: " + error.message);
+        //         });
+        // }
+
+        // Force admin login on load
+        window.onload = function () {
+            if (!sessionStorage.getItem("isAdmin")) {
+                document.getElementById("adminLoginModal").classList.remove("hidden");
+            }
+        };
+
+        function validateAdmin() {
+            const user = document.getElementById("adminUsername").value;
+            const pass = document.getElementById("adminPassword").value;
+            const selectedPortal = document.querySelector('input[name="portal"]:checked').value;
+
+            if (user === "admin" && pass === "admin") {
+                sessionStorage.setItem("isAdmin", true);
+                window.location.href = selectedPortal;
+            } else {
+                alert("Invalid credentials");
+            }
+        }
+
+
+        function logoutAdmin() {
+            sessionStorage.removeItem("isAdmin");
+            window.location.reload();
+        }
+
+
         function openExportModal() {
             document.getElementById("exportModal").classList.remove("hidden");
-            document.getElementById("exportModal").classList.add("flex");
         }
+
         function closeExportModal() {
             document.getElementById("exportModal").classList.add("hidden");
-            document.getElementById("exportModal").classList.remove("flex");
         }
 
         function submitExportForm() {
-            const username = document.getElementById("exportUsername").value;
-            const password = document.getElementById("exportPassword").value;
             const fromDate = document.getElementById("exportFromDate").value;
             const toDate = document.getElementById("exportToDate").value;
 
             fetch("http://127.0.0.1:5000/export", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password, fromDate, toDate })
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: "admin",
+                    password: "admin",
+                    fromDate,
+                    toDate,
+                }),
             })
-                .then(response => {
-                    if (response.ok) {
-                        return response.blob();
-                    } else {
-                        return response.text().then(text => { throw new Error(text); });
-                    }
+                .then((res) => {
+                    if (res.ok) return res.blob();
+                    else return res.text().then((text) => { throw new Error(text); });
                 })
-                .then(blob => {
+                .then((blob) => {
                     const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
+                    const a = document.createElement("a");
                     a.href = url;
-                    a.download = 'media_data.xlsx';
+                    a.download = "media_data.xlsx";
                     a.click();
                     window.URL.revokeObjectURL(url);
                     closeExportModal();
                 })
-                .catch(error => {
-                    alert("Export failed: " + error.message);
-                });
+                .catch((err) => alert("Export failed: " + err.message));
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const isAdmin = sessionStorage.getItem("isAdmin");
+
+            if (isAdmin !== "true") {
+                // Block form and force login
+                document.getElementById("adminLoginModal").classList.remove("hidden");
+                document.getElementById("adminLoginModal").classList.add("flex");
+            } else {
+                // Hide modal so form becomes accessible
+                document.getElementById("adminLoginModal").classList.add("hidden");
+                document.getElementById("adminLoginModal").classList.remove("flex");
+            }
+        });
+
+
+
     </script>
 </body>
 
