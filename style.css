@@ -1,0 +1,407 @@
+/* @import "tailwindcss"; */
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.custom-body {
+    background-color: #f7fafc;
+    /* bg-gray-100 */
+    min-height: 100vh;
+    /* min-h-screen */
+    margin: 0;
+    padding: 0;
+}
+
+.custom-container {
+    width: 100%;
+    max-width: 1200px;
+    /* similar to Tailwind's container + mx-auto */
+    margin: 0 auto;
+    padding-left: 1rem;
+    /* px-4 = 1rem */
+    padding-right: 1rem;
+    padding-top: 2rem;
+    /* py-8 = 2rem */
+    padding-bottom: 2rem;
+}
+
+.custom-card {
+    max-width: 64rem;
+    /* max-w-4xl = 1024px = 64rem */
+    margin: 0 auto;
+    background-color: #ffffff;
+    /* bg-white */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* shadow-md */
+    overflow: hidden;
+}
+
+.custom-header {
+    background-color: #2563eb;
+    /* bg-blue-600 */
+    padding: 1rem 1.5rem;
+    /* py-4 px-6 */
+}
+
+.custom-title {
+    font-size: 1.5rem;
+    /* text-2xl */
+    font-weight: 700;
+    /* font-bold */
+    color: #ffffff;
+    /* text-white */
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.custom-icon {
+    margin-right: 0.5rem;
+    /* mr-2 */
+}
+
+.p-6 {
+    padding: 1.5rem;
+    /* 24px */
+}
+
+.issuanceForm {
+    margin-top: 1.5rem;
+    /* 24px between child elements */
+}
+
+.grid {
+    display: grid;
+    gap: 1.5rem;
+    /* 24px */
+    grid-template-columns: 1fr;
+    /* default: 1 column */
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns on medium screens and up */
+    }
+}
+
+label {
+    display: block;
+    font-size: 0.875rem;
+    /* Tailwind's text-sm */
+    font-weight: 500;
+    /* Tailwind's font-medium */
+    color: #374151;
+    /* Tailwind's gray-700 */
+    margin-bottom: 0.25rem;
+    /* Tailwind's mb-1 */
+}
+
+label span {
+    color: #ef4444;
+    /* Tailwind's red-500 */
+}
+
+select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    /* Tailwind: py-2 px-3 */
+    border: 1px solid #d1d5db;
+    /* Tailwind: border-gray-300 */
+    border-radius: 0.375rem;
+    /* Tailwind: rounded-md */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    /* Tailwind: shadow-sm */
+    outline: none;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:focus {
+    border-color: #3b82f6;
+    /* Tailwind: border-blue-500 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    /* Tailwind: ring-blue-500 */
+}
+
+.error-message {
+    color: #dc2626;
+    /* Tailwind: text-red-600 */
+    font-size: 0.875rem;
+    /* Tailwind: text-sm */
+    margin-top: 0.25rem;
+    /* Tailwind: mt-1 */
+    display: none;
+    /* Tailwind: hidden */
+}
+
+.error-message.visible {
+    display: block;
+}
+
+input[type="text"] {
+    width: 100%;
+    /* Tailwind: w-full */
+    padding: 0.5rem 0.75rem;
+    /* Tailwind: px-3 py-2 */
+    border: 1px solid #d1d5db;
+    /* Tailwind: border border-gray-300 */
+    border-radius: 0.375rem;
+    /* Tailwind: rounded-md */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    /* Tailwind: shadow-sm */
+    outline: none;
+    /* Tailwind: focus:outline-none */
+}
+
+input[type="text"]:focus {
+    border-color: #3b82f6;
+    /* Tailwind: focus:border-blue-500 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    /* Tailwind: focus:ring-blue-500 */
+}
+
+.col-span-2 {
+    grid-column: span 2 / span 2;
+}
+
+@media (min-width: 768px) {
+    .col-span-2 {
+        grid-column: span 2 / span 2;
+    }
+}
+
+.button-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    /* 12px */
+}
+
+.btn-export {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    /* border-gray-300 */
+    border-radius: 0.375rem;
+    /* rounded-md */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    /* shadow-sm */
+    font-size: 0.875rem;
+    /* text-sm */
+    font-weight: 500;
+    /* font-medium */
+    color: #2563eb;
+    /* text-blue-600 */
+    background-color: #ffffff;
+    /* bg-white */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-export:hover {
+    background-color: #f3f4f6;
+    /* hover:bg-gray-100 */
+}
+
+.btn-export:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    /* focus:ring-blue-500 */
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* bg-black bg-opacity-50 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+.modal-box {
+    background-color: white;
+    padding: 1.5rem;
+    /* p-6 */
+    border-radius: 0.5rem;
+    /* rounded */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* shadow-md */
+    width: 100%;
+    /* w-full */
+    max-width: 28rem;
+    /* max-w-md */
+    position: relative;
+    /* relative */
+}
+
+.modal-close-button {
+    position: absolute;
+    /* absolute */
+    top: 0.5rem;
+    /* top-2 */
+    right: 0.5rem;
+    /* right-2 */
+    color: #6B7280;
+    /* text-gray-500 */
+    font-size: 1.125rem;
+    /* text-lg */
+
+    transition: color 0.2s ease-in-out;
+}
+
+.modal-close-button:hover {
+    color: #000000;
+    /* hover:text-black */
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    /* text-xl */
+    font-weight: bold;
+    /* font-bold */
+    margin-bottom: 1rem;
+    /* mb-4 */
+    text-align: center;
+    /* text-center */
+}
+
+.export-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    /* space-y-3 */
+}
+
+.export-input {
+    width: 100%;
+    /* w-full */
+    padding: 0.5rem 0.75rem;
+    /* px-3 py-2 */
+    border: 1px solid #D1D5DB;
+    /* border-gray-300 */
+    border-radius: 0.375rem;
+    /* rounded */
+    outline: none;
+    /* focus:outline-none */
+    transition: all 0.2s ease-in-out;
+}
+
+.export-input:focus {
+    border-color: #3B82F6;
+    /* focus:border-blue-500 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    /* focus:ring focus:ring-blue-500 */
+}
+
+.export-label {
+    display: block;
+    /* block */
+    font-size: 0.875rem;
+    color: #374151;
+    /* text-gray-700 */
+}
+
+.export-button {
+    width: 100%;
+    /* w-full */
+    padding: 0.5rem 1rem;
+    /* py-2 px-4 */
+    background-color: #2563EB;
+    /* bg-blue-600 */
+    color: white;
+    /* text-white */
+    border: none;
+    border-radius: 0.375rem;
+    /* rounded */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.export-button:hover {
+    background-color: #1D4ED8;
+    /* hover:bg-blue-700 */
+}
+
+.reset-button {
+    padding: 0.5rem 1rem;
+    /* py-2 px-4 */
+    border: 1px solid #D1D5DB;
+    /* border-gray-300 */
+    border-radius: 0.375rem;
+    /* rounded-md */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    /* shadow-sm */
+    font-size: 0.875rem;
+    /* text-sm */
+    font-weight: 500;
+    /* font-medium */
+    color: #374151;
+    /* text-gray-700 */
+    background-color: white;
+    /* bg-white */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.reset-button:hover {
+    background-color: #F9FAFB;
+    /* hover:bg-gray-50 */
+}
+
+.reset-button:focus {
+    outline: none;
+    /* focus:outline-none */
+    box-shadow:
+        0 0 0 2px rgba(59, 130, 246, 0.5),
+        /* focus:ring-2 */
+        0 0 0 4px white;
+    /* focus:ring-offset-2 with light bg */
+}
+
+.submit-button {
+    padding: 0.5rem 1rem;
+    /* py-2 px-4 */
+    border: 1px solid transparent;
+    /* border-transparent */
+    border-radius: 0.375rem;
+    /* rounded-md */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    /* shadow-sm */
+    font-size: 0.875rem;
+    /* text-sm */
+    font-weight: 500;
+    /* font-medium */
+    color: #ffffff;
+    /* text-white */
+    background-color: #2563EB;
+    /* bg-blue-600 */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+    background-color: #1D4ED8;
+    /* hover:bg-blue-700 */
+}
+
+.submit-button:focus {
+    outline: none;
+    /* focus:outline-none */
+    box-shadow:
+        0 0 0 2px rgba(59, 130, 246, 0.5),
+        /* focus:ring-2 */
+        0 0 0 4px white;
+    /* focus:ring-offset-2 with white bg */
+}
